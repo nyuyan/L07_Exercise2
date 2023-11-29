@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Exercise 2</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  </head>
+
+  <body>
+    <form id="myForm">
+      <input id="name" type="text" placeholder="Name" value="" /><br /><br />
+      <input id="email" type="email" placeholder="Email" value="" /><br /><br />
+      <label> <input type="radio" name="gender" value="male" /> Male </label>
+      <label>
+        <input type="radio" name="gender" value="female" /> Female
+      </label>
+      <br /><br />
+      <input type="button" value="Submit" onclick="submitForm()" />
+    </form>
+
+    <div id="recordedData" style="display: none; margin-top: 20px"></div>
+
+    <script>
+      var recordedFormData = [];
+
+      function submitForm() {
+        var name = $("#name").val();
+        var email = $("#email").val();
+        var gender = $('input[name="gender"]:checked');
+
+        if (name === "" || email === "" || gender.length === 0) {
+          alert("Please fill in all fields");
+          return;
+        }
+        var formData = {
+          name: name,
+          email: email,
+          gender: gender.val(),
+        };
+
+        recordedFormData.push(formData);
+
+        displayRecordedDataWithEffects();
+      }
+
+      function displayRecordedDataWithEffects() {
+        var recordedDataDisplay = $("#recordedData");
+        recordedDataDisplay.html(
+          "<h2>Recorded Data</h2>" +
+            "<div style='padding: 10px;'>" +
+            "<p><strong>Name:</strong> " +
+            recordedFormData[recordedFormData.length - 1].name +
+            "</p>" +
+            "<p><strong>Email:</strong> " +
+            recordedFormData[recordedFormData.length - 1].email +
+            "</p>" +
+            "<p><strong>Gender:</strong> " +
+            recordedFormData[recordedFormData.length - 1].gender +
+            "</p>" +
+            "</div>"
+        );
+
+        recordedDataDisplay.fadeOut(500, function () {
+          recordedDataDisplay.fadeIn(500);
+        });
+        recordedDataDisplay.css({
+          "font-family": "Arial",
+          "border": "2px solid gray",
+          "background-color": "lightblue",
+          "margin-top": "20px",
+        });
+
+        recordedDataDisplay.mouseover(function () {
+          recordedDataDisplay.slideUp();
+        });
+      }
+    </script>
+  </body>
+</html>
